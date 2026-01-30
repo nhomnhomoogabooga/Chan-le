@@ -1,0 +1,33 @@
+<style>
+  body { background: #111; color: #0f8; text-align: center; font-family: sans-serif; padding-top: 50px; user-select: none; }
+  #num { font-size: 80px; margin: 40px; font-weight: bold; }
+  button { padding: 20px 50px; font-size: 20px; border-radius: 30px; cursor: pointer; background: #333; color: white; border: 2px solid #555; touch-action: manipulation; }
+</style>
+
+<h1>Generator</h1>
+<div id="num">---</div>
+<button id="btn">GENERATE</button>
+
+<script>
+  const btn = document.getElementById('btn'), display = document.getElementById('num');
+  let start;
+
+  const handleStart = (e) => { e.preventDefault(); start = Date.now(); };
+  
+  const handleEnd = () => {
+    const duration = Date.now() - start;
+    let n = Math.floor(Math.random() * 1000) + 1;
+    
+    // Quick (<300ms) = ODD | Long (>300ms) = EVEN
+    if (duration < 300) { if (n % 2 === 0) n++; } 
+    else { if (n % 2 !== 0) n++; }
+    
+    if (n > 1000) n -= 2;
+    display.innerText = n;
+  };
+
+  btn.addEventListener('mousedown', handleStart);
+  btn.addEventListener('touchstart', handleStart);
+  btn.addEventListener('mouseup', handleEnd);
+  btn.addEventListener('touchend', handleEnd);
+</script>
